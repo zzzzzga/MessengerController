@@ -23,6 +23,12 @@ namespace ManagenrController
         /// </summary>
         public static BlockingQueue<Message> ReceiveMsgQueue = new BlockingQueue<Message>();
 
+        private static int NextId = 1;
+
+        public static string GetId()
+        {
+            return NextId++.ToString();
+        }
 
         public static readonly string IP = "127.0.0.1";
 

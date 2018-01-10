@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdbHelper.cs" />
     <Compile Include="BlockingQueue.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -101,9 +102,12 @@
   <ItemGroup>
     <Content Include="lib\adb.exe" />
     <Content Include="lib\AdbWinApi.dll" />
+    <Content Include="lib\AdbWinUsbApi.dll" />
+    <Content Include="lib\fastboot.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy $(ProjectDir)lib\* $(TargetDir)</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -31,6 +31,9 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnSN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnUsb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnSocket = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label_1 = new System.Windows.Forms.Label();
             this.maxFriendsNum = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -57,11 +60,10 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
-            this.columnUsb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnSocket = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.installApkBtn = new System.Windows.Forms.Button();
             this.openApkBtn = new System.Windows.Forms.Button();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -84,7 +86,9 @@
             this.columnSN,
             this.columnUsb,
             this.columnSocket,
-            this.columnState});
+            this.columnState,
+            this.columnHeader1,
+            this.columnHeader2});
             this.listView1.Location = new System.Drawing.Point(2, 1);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(322, 641);
@@ -101,6 +105,22 @@
             // 
             this.columnSN.Text = "设备号";
             this.columnSN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnSN.Width = 50;
+            // 
+            // columnUsb
+            // 
+            this.columnUsb.Text = "USB连接";
+            this.columnUsb.Width = 50;
+            // 
+            // columnSocket
+            // 
+            this.columnSocket.Text = "Socket连接";
+            this.columnSocket.Width = 50;
+            // 
+            // columnState
+            // 
+            this.columnState.Text = "手机状态";
+            this.columnState.Width = 50;
             // 
             // label_1
             // 
@@ -346,19 +366,6 @@
             this.pictureBox10.TabIndex = 0;
             this.pictureBox10.TabStop = false;
             // 
-            // columnUsb
-            // 
-            this.columnUsb.Text = "USB连接";
-            // 
-            // columnSocket
-            // 
-            this.columnSocket.Text = "Socket连接";
-            this.columnSocket.Width = 80;
-            // 
-            // columnState
-            // 
-            this.columnState.Text = "手机状态";
-            // 
             // installApkBtn
             // 
             this.installApkBtn.Location = new System.Drawing.Point(4, 654);
@@ -376,6 +383,16 @@
             this.openApkBtn.TabIndex = 11;
             this.openApkBtn.Text = "一键打开app";
             this.openApkBtn.UseVisualStyleBackColor = true;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "好友数";
+            this.columnHeader1.Width = 50;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "执行结果";
+            this.columnHeader2.Width = 50;
             // 
             // MainForm
             // 
@@ -457,6 +474,8 @@
         private System.Windows.Forms.ColumnHeader columnState;
         private System.Windows.Forms.Button installApkBtn;
         private System.Windows.Forms.Button openApkBtn;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 
