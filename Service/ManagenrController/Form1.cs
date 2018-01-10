@@ -53,6 +53,33 @@ namespace ManagenrController
                     list.Add(client);
                     //Thread.Sleep(1000);
                 }
+                Thread.Sleep(5000);
+                while (i < 60)
+                {
+                    i++;
+                    // to do 监听手机连接
+                    //string id = Guid.NewGuid().ToString();
+                    //string serialNumber = Guid.NewGuid().ToString();
+                    //Global.PhoneDic.TryAdd(serialNumber, new Phone() { Id = id, SerialNumber = serialNumber });
+                    //Thread.Sleep(1000);
+                    //this.Invoke(new Action(RefreshListView));
+                    Socket client = new Socket(SocketType.Stream, ProtocolType.Tcp);
+                    client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 14808));
+                    string sn = (i - 30).ToString();
+                    string msg = "{\"type\":2,\"SN\":\"" + sn + "\",\"result\":1}";
+
+                    Global.AddPhoneDic(sn, new Phone() { Id = Guid.NewGuid().ToString(), SerialNumber = sn });
+                    int len = Encoding.UTF8.GetByteCount(msg);
+                    byte[] buf = new byte[4];
+                    buf[0] = (byte)(len & 0xff);
+                    buf[1] = (byte)(len >> 8);
+                    buf[2] = (byte)(len >> 16);
+                    buf[3] = (byte)(len >> 24);
+                    buf = buf.Concat(Encoding.UTF8.GetBytes(msg)).ToArray();
+                    client.Send(buf);
+                    list.Add(client);
+                    //Thread.Sleep(1000);
+                }
                 string msg1 = "{\"type\":101,\"data\":\"sdgsdhjfgsjhdfgsjhdfg这是文本消息\",\"num\":100}";
                 for(i = 1; i<=10;i++)
                 {
@@ -101,6 +128,23 @@ namespace ManagenrController
             ListViewItem item = new ListViewItem(strs);
             item.Tag = phone.SerialNumber;
             this.listView1.Items.Add(item);
+        }
+
+        public void RefreshListView()
+        {
+            // string[] strs = new string[5];
+            foreach (var phone in Global.PhoneList)
+            {
+                //this.listView1.Items.Clear();
+                //strs[0] = phone.Id;
+                //strs[1] = phone.SerialNumber;
+                //strs[2] = phone.IsUsbConnect ? "已连接" : "未连接";
+                //strs[3] = phone.IsSocketConnect ? "已连接" : "未连接";
+                //strs[4] = phone.MobileState.ToString();
+                //ListViewItem item = new ListViewItem(strs);
+                //this.listView1.Items.Add(item);
+                this.RefreshListView(phone);
+            }
         }
     }
 }

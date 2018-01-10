@@ -29,5 +29,13 @@ namespace ManagenrController
             s_busy.WaitOne();
             return concurrentQueue.TryDequeue(out  result);
         }
+
+        public int Count
+        {
+            get
+            {
+                return concurrentQueue.Count;
+            }
+        }
     }
 }

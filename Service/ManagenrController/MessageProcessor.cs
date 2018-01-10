@@ -155,6 +155,11 @@ namespace ManagenrController
                                 Logger.Info("序列号：" + model.SN + ", 执行结果返回, 最终结果为：" + model.result);
                                 break;
                         }
+                        //if (Global.Form != null && Global.ReceiveMsgQueue.Count == 0)
+                        //{
+                        //    // Global.Form.Invoke(new Action<Phone>(Global.Form.RefreshListView), Global.GetPhone(model.SN));
+                        //    Global.Form.Invoke(new Action(Global.Form.RefreshListView));
+                        //}
                         if (Global.Form != null)
                         {
                             Global.Form.Invoke(new Action<Phone>(Global.Form.RefreshListView), Global.GetPhone(model.SN));
