@@ -17,6 +17,7 @@ namespace ManagenrController
             Service.Default.StartService();
             Service.Default.Receive();
             Service.Default.Send();
+            Service.Default.ScanDevice();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

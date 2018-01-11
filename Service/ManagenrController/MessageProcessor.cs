@@ -129,7 +129,9 @@ namespace ManagenrController
                 }
             }
         }
-
+        /// <summary>
+        /// 单线程处理接受消息
+        /// </summary>
         public static void DealWithReceiveMessage()
         {
             while(true)
@@ -172,7 +174,9 @@ namespace ManagenrController
                 }
             }
         }
-
+        /// <summary>
+        /// 单线程处理发送消息
+        /// </summary>
         public static void DealWidthSendMessage()
         {
             while(true)
@@ -182,16 +186,25 @@ namespace ManagenrController
                 {
                     if (Global.SendMsgQueue.TryDequeue(out msg))
                     {
+                        if (Global.GetPhone(msg.SerialNumber).MobileState == EnumMobileState.执行中)
+                        {
+                            if (msg != null)
+                            {
+                                Logger.Warn("手机正在执行其他功能，稍后处理");
+                                Global.SendMsgQueue.Enqueue(msg);
+                                continue;
+                            }
+                        }
                         var conn = Global.GetPhone(msg.SerialNumber).Connection;
                         conn.BeginSend(msg.MessgaeBody, 0, msg.MessgaeBody.Length,
-                            SocketFlags.None, null, null);
+                            SocketFlags.None, (obj) => { Logger.Info("向手机：" + msg.SerialNumber + ", 发送消息成功"); }, null);
                     }
                 }
                 catch(Exception ex)
                 {
                     if (msg != null)
                     {
-                        Logger.Info("消息发送失败， 重新发送");
+                        Logger.Warn("消息发送失败， 正在重新发送");
                         Global.SendMsgQueue.Enqueue(msg);
                     }
                     Logger.Error(ex.ToString());

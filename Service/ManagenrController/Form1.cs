@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,8 +19,20 @@ namespace ManagenrController
     {
         public MainForm()
         {
+            PictureBoxList = new List<PictureBox>();
             InitializeComponent();
+            PictureBoxList.Add(this.pictureBox1);
+            PictureBoxList.Add(this.pictureBox2);
+            PictureBoxList.Add(this.pictureBox3);
+            PictureBoxList.Add(this.pictureBox4);
+            PictureBoxList.Add(this.pictureBox5);
+            PictureBoxList.Add(this.pictureBox6);
+            PictureBoxList.Add(this.pictureBox7);
+            PictureBoxList.Add(this.pictureBox8);
+            PictureBoxList.Add(this.pictureBox9);
         }
+
+        private List<PictureBox> PictureBoxList;
 
         private void Test()
         {
@@ -108,10 +121,14 @@ namespace ManagenrController
         private void MainForm_Load(object sender, EventArgs e)
         {
             // 
-            AdbHelper.ScanDevice();
-            // AdbHelper.InstallApk();
-            AdbHelper.OpenApk(Global.PhoneList[0], "com.tencent.mm/com.tencent.mm.ui.LauncherUI");
-            Test();
+            //AdbHelper.ScanDevice();
+            //AdbHelper.InstallApk();
+            //AdbHelper.OpenApk(Global.PhoneList[0], "com.tencent.mm/com.tencent.mm.ui.LauncherUI");
+            //Test();
+
+            // 设置图片选择框
+            this.openFileDialog1.Filter = "Image文件(*.png;*.jpg;*.gif;*.bmp)|*.png;*.jpg;*.gif;*.bmp";
+            this.openFileDialog1.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         }
 
         public void RefreshListView(Phone phone)
@@ -145,18 +162,107 @@ namespace ManagenrController
 
         public void RefreshListView()
         {
-            // string[] strs = new string[5];
             foreach (var phone in Global.PhoneList)
             {
-                //this.listView1.Items.Clear();
-                //strs[0] = phone.Id;
-                //strs[1] = phone.SerialNumber;
-                //strs[2] = phone.IsUsbConnect ? "已连接" : "未连接";
-                //strs[3] = phone.IsSocketConnect ? "已连接" : "未连接";
-                //strs[4] = phone.MobileState.ToString();
-                //ListViewItem item = new ListViewItem(strs);
-                //this.listView1.Items.Add(item);
                 this.RefreshListView(phone);
+            }
+        }
+
+        private void openApkBtn_Click(object sender, EventArgs e)
+        {
+            this.openApkBtn.Enabled = false;
+            var t = new Thread(() => {
+                foreach (var phone in Global.PhoneList)
+                {
+                    AdbHelper.OpenApk(phone, Global.StartActivity);
+                }
+                this.openApkBtn.Invoke(new Action(() => { this.openApkBtn.Enabled = true; }));
+            });
+            t.IsBackground = true;
+            t.Start();
+            RefreshListView();
+        }
+
+        private void installApkBtn_Click(object sender, EventArgs e)
+        {
+            this.installApkBtn.Enabled = false;
+            var t = new Thread(() =>
+            {
+                ConcurrentStack<IAsyncResult> stack = new ConcurrentStack<IAsyncResult>();
+                Semaphore semaphore  = new Semaphore(0, 1);
+                foreach (var phone in Global.PhoneList)
+                {
+                    stack.Push(new Action(() =>
+                    {
+                        AdbHelper.InstallApk(phone, Global.AppPath);
+                    }).BeginInvoke((obj) =>
+                    {
+                        this.Invoke(new Action(RefreshListView));
+                        IAsyncResult result = null;
+                        stack.TryPop(out result);
+                        if (stack.Count == 0)
+                        {
+                            semaphore.Release();
+                        }
+                    }, null));
+                }
+                semaphore.WaitOne();
+                this.installApkBtn.Invoke(new Action(() => { this.installApkBtn.Enabled = true; }));
+            });
+            t.IsBackground = true;
+            t.Start();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
+
+        private void clearTxtBtn_Click(object sender, EventArgs e)
+        {
+            this.SendTxtTbx.Text = "";
+        }
+
+        private void ClearImgBtn_Click(object sender, EventArgs e)
+        {
+            foreach (var item in PictureBoxList)
+            {
+                item.Image = global::ManagenrController.Properties.Resources._3;
+                item.ImageLocation = "";
+            }
+        }
+
+        private void SendImgBtn_Click(object sender, EventArgs e)
+        {
+            List<string> images = new List<string>();
+            foreach (var item in PictureBoxList)
+            {
+                if (!string.IsNullOrEmpty(item.ImageLocation))
+                {
+                    images.Add(item.ImageLocation);
+                }
+            }
+        }
+
+        private void SelectImgBtn_Click(object sender, EventArgs e)
+        {
+            //foreach (var item in PictureBoxList)
+            //{
+            //    item.ImageLocation = @"C:\Users\Administrator\Desktop\4.png";
+            //}
+            this.openFileDialog1.Multiselect = true;
+            this.openFileDialog1.FileOk += OpenFileDialog1_FileOk;
+            this.openFileDialog1.ShowDialog();
+            this.openFileDialog1.FileOk -= OpenFileDialog1_FileOk;
+        }
+
+        private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            string[] files = this.openFileDialog1.FileNames;
+            int min = Math.Min(files.Length, PictureBoxList.Count);
+            for (int i = 0; i < min; i++)
+            {
+                PictureBoxList[i].ImageLocation = files[i];
             }
         }
     }

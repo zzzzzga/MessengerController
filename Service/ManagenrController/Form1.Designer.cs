@@ -34,6 +34,8 @@
             this.columnUsb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnSocket = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label_1 = new System.Windows.Forms.Label();
             this.maxFriendsNum = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -62,8 +64,7 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.installApkBtn = new System.Windows.Forms.Button();
             this.openApkBtn = new System.Windows.Forms.Button();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -91,7 +92,7 @@
             this.columnHeader2});
             this.listView1.Location = new System.Drawing.Point(2, 1);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(322, 641);
+            this.listView1.Size = new System.Drawing.Size(338, 641);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -121,6 +122,16 @@
             // 
             this.columnState.Text = "手机状态";
             this.columnState.Width = 50;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "好友数";
+            this.columnHeader1.Width = 50;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "执行结果";
+            this.columnHeader2.Width = 50;
             // 
             // label_1
             // 
@@ -182,6 +193,7 @@
             this.SelectImgBtn.TabIndex = 7;
             this.SelectImgBtn.Text = "选择图片";
             this.SelectImgBtn.UseVisualStyleBackColor = true;
+            this.SelectImgBtn.Click += new System.EventHandler(this.SelectImgBtn_Click);
             // 
             // panel1
             // 
@@ -301,6 +313,7 @@
             this.clearTxtBtn.TabIndex = 2;
             this.clearTxtBtn.Text = "清空文本";
             this.clearTxtBtn.UseVisualStyleBackColor = true;
+            this.clearTxtBtn.Click += new System.EventHandler(this.clearTxtBtn_Click);
             // 
             // SendTxtBtn
             // 
@@ -327,6 +340,7 @@
             this.SendImgBtn.TabIndex = 1;
             this.SendImgBtn.Text = "发送图片";
             this.SendImgBtn.UseVisualStyleBackColor = true;
+            this.SendImgBtn.Click += new System.EventHandler(this.SendImgBtn_Click);
             // 
             // ClearImgBtn
             // 
@@ -336,6 +350,7 @@
             this.ClearImgBtn.TabIndex = 1;
             this.ClearImgBtn.Text = "清空图片";
             this.ClearImgBtn.UseVisualStyleBackColor = true;
+            this.ClearImgBtn.Click += new System.EventHandler(this.ClearImgBtn_Click);
             // 
             // groupBox2
             // 
@@ -374,6 +389,7 @@
             this.installApkBtn.TabIndex = 11;
             this.installApkBtn.Text = "一键安装app";
             this.installApkBtn.UseVisualStyleBackColor = true;
+            this.installApkBtn.Click += new System.EventHandler(this.installApkBtn_Click);
             // 
             // openApkBtn
             // 
@@ -383,16 +399,13 @@
             this.openApkBtn.TabIndex = 11;
             this.openApkBtn.Text = "一键打开app";
             this.openApkBtn.UseVisualStyleBackColor = true;
+            this.openApkBtn.Click += new System.EventHandler(this.openApkBtn_Click);
             // 
-            // columnHeader1
+            // openFileDialog1
             // 
-            this.columnHeader1.Text = "好友数";
-            this.columnHeader1.Width = 50;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "执行结果";
-            this.columnHeader2.Width = 50;
+            this.openFileDialog1.DefaultExt = "png,.jpg,.gif,.bmp";
+            this.openFileDialog1.Multiselect = true;
+            this.openFileDialog1.Title = "选择图片";
             // 
             // MainForm
             // 
@@ -415,8 +428,10 @@
             this.Controls.Add(this.label_1);
             this.Controls.Add(this.listView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "控制器";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
@@ -476,6 +491,7 @@
         private System.Windows.Forms.Button openApkBtn;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

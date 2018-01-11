@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace ManagenrController
 {
@@ -47,29 +49,44 @@ namespace ManagenrController
 
         private void Listen()
         {
-            //  死循环
-            // 启动socket服务
-            // 获得连接
-            var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-            socket.Bind(new IPEndPoint(IPAddress.Parse(Global.IP), Global.Port));
-            socket.Listen(100);
-            Socket connection = null;
-            while (true)
+            Socket socket = null;
+            try
             {
-                try
+                //  死循环
+                // 启动socket服务
+                // 获得连接
+                socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+                socket.Bind(new IPEndPoint(IPAddress.Parse(Global.IP), Global.Port));
+                socket.Listen(100);
+                Socket connection = null;
+
+                while (true)
                 {
-                    connection = socket.Accept();
+                    try
+                    {
+                        connection = socket.Accept();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex.Message);
+                        break;
+                    }
+                    // 接受消息
+                    var pts = new ParameterizedThreadStart(MessageProcessor.ReceiveMsg);
+                    var t = new Thread(pts);
+                    t.IsBackground = true;
+                    t.Start(connection);
                 }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex.Message);
-                    break;
-                }
-                // 接受消息
-                var pts = new ParameterizedThreadStart(MessageProcessor.ReceiveMsg);
-                var t = new Thread(pts);
-                t.IsBackground = true;
-                t.Start(connection);
+            }
+            catch(Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+            finally
+            {
+                socket?.Close();
+                MessageBox.Show("端口：" + Global.Port + "被占用...", "错误");
+                Environment.Exit(1);
             }
         }
 
@@ -85,6 +102,35 @@ namespace ManagenrController
             var thread = new Thread(MessageProcessor.DealWidthSendMessage);
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        public void ScanDevice()
+        {
+            var t = new Thread(() =>
+            {
+                try
+                {
+                    Stopwatch stopwatch = new Stopwatch();
+                    while (true)
+                    {
+                        stopwatch.Start();
+                        AdbHelper.ScanDevice();
+                        if (Global.Form != null)
+                        {
+                            Global.Form.Invoke(new Action(Global.Form.RefreshListView));
+                        }
+                        stopwatch.Stop();
+                        int time = Global.ScanTime * 1000 - (int)stopwatch.ElapsedMilliseconds;
+                        Thread.Sleep(time > 0 ? time : 0);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.ToString());
+                }
+            });
+            t.IsBackground = true;
+            t.Start();
         }
     }
 }

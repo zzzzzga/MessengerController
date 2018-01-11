@@ -25,20 +25,33 @@ namespace ManagenrController
 
         private static int NextId = 1;
 
+        private static readonly object lockObj = new object();
+
         public static string GetId()
         {
-            return NextId++.ToString();
+            lock(lockObj)
+            {
+                return NextId++.ToString();
+            }
         }
 
         public static readonly string IP = "127.0.0.1";
 
-        public static readonly int Port = 14808;
+        public static readonly int Port = 14807;
+
+        public static readonly int ScanTime = 1; // 每1秒扫描一次
+
+        public static readonly string StartActivity = "com.tencent.mm/com.tencent.mm.ui.LauncherUI";
+
+        public static readonly string AppPath = "douban_120.apk";
 
         public static MainForm Form;
 
         public static void AddPhoneDic(string serialNumber, Phone phone)
         {
-            PhoneDic.TryAdd(serialNumber, phone);
+            //PhoneDic.TryAdd(serialNumber, phone);
+            //PhoneDic[serialNumber] = phone;
+            PhoneDic[serialNumber] = phone;
         }
 
         public static void UpdatePhone(string serialNumber, int friendNum)
