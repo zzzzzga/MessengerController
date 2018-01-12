@@ -36,14 +36,20 @@ namespace ManagenrController
         }
 
         public static readonly string IP = "127.0.0.1";
-
+        /// <summary>
+        /// 服务器端口
+        /// </summary>
         public static readonly int Port = 14807;
+        /// <summary>
+        /// 手机上映射的端口
+        /// </summary>
+        public static readonly int MobilePort = 14808;
 
         public static readonly int ScanTime = 1; // 每1秒扫描一次
 
-        public static readonly string StartActivity = "com.tencent.mm/com.tencent.mm.ui.LauncherUI";
+        public static readonly string StartActivity = "com.lxkj.fansir.fansirfb/com.lxkj.fansir.fansirfb.MainActivity";
 
-        public static readonly string AppPath = "douban_120.apk";
+        public static readonly string AppPath = "fansirfb-debug.apk";
 
         public static MainForm Form;
 
@@ -94,6 +100,22 @@ namespace ManagenrController
             get
             {
                 return PhoneDic.Select(p => p.Value).ToList();
+            }
+        }
+
+        public static List<Phone> IsUsbConnectPhoneList
+        {
+            get
+            {
+                return PhoneDic.Where(p => p.Value.IsUsbConnect).Select(p => p.Value).ToList();
+            }
+        }
+
+        public static List<Phone> IsSocketConnectPhoneList
+        {
+            get
+            {
+                return PhoneDic.Where(p => p.Value.IsSocketConnect).Select(p => p.Value).ToList();
             }
         }
     }

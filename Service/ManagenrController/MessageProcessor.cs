@@ -42,13 +42,14 @@ namespace ManagenrController
             int readLen = 0;
             int frameLen = 0;
             byte[] frame = null;
+            byte[] buf = new byte[1024 * 1024];
             while (true)
             {
                 try
                 {
-                    byte[] buf = new byte[1024 * 1024];
                     int len = 0;
                     len = client.Receive(buf);
+                    if (len == 0) break;
                     for (int i = 0; i < len; i++)
                     {
                         if (readLen < 4)
@@ -148,6 +149,12 @@ namespace ManagenrController
                                 // 建立连接
                                 Global.UpdatePhone(model.SN, model.result);
                                 Global.UpdatePhone(model.SN, msg.Connection);
+
+                                // 刷新好友数量
+                                if (Global.Form != null)
+                                {
+                                    Global.Form.Invoke(new Action(Global.Form.RefreshFriendNum));
+                                }
                                 Logger.Info("序列号：" + model.SN + ", 建立socket连接, 好友数为：" + model.result);
                                 break;
                             case 2:
