@@ -147,20 +147,20 @@ namespace ManagenrController
                 {
                     this.listView1.Items[it.Index].SubItems[2].Text = phone.IsUsbConnect ? "已连接" : "未连接";
                     this.listView1.Items[it.Index].SubItems[3].Text = phone.IsSocketConnect ? "已连接" : "未连接";
-                    this.listView1.Items[it.Index].SubItems[4].Text = phone.MobileState.ToString();
-                    this.listView1.Items[it.Index].SubItems[5].Text = phone.FriendsNum.ToString();
-                    this.listView1.Items[it.Index].SubItems[6].Text = phone.ExecuteState.ToString();
+                    //this.listView1.Items[it.Index].SubItems[4].Text = phone.MobileState.ToString();
+                    //this.listView1.Items[it.Index].SubItems[5].Text = phone.FriendsNum.ToString();
+                    //this.listView1.Items[it.Index].SubItems[6].Text = phone.ExecuteState.ToString();
                     return;
                 }
             }
-            string[] strs = new string[7];
+            string[] strs = new string[4];
             strs[0] = phone.Id;
             strs[1] = phone.SerialNumber;
             strs[2] = phone.IsUsbConnect ? "已连接" : "未连接";
             strs[3] = phone.IsSocketConnect ? "已连接" : "未连接";
-            strs[4] = phone.MobileState.ToString();
-            strs[5] = phone.FriendsNum.ToString();
-            strs[6] = phone.ExecuteState.ToString();
+            //strs[4] = phone.MobileState.ToString();
+            //strs[5] = phone.FriendsNum.ToString();
+            //strs[6] = phone.ExecuteState.ToString();
             ListViewItem item = new ListViewItem(strs);
             item.Tag = phone.SerialNumber;
             this.listView1.Items.Add(item);

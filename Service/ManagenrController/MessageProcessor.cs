@@ -151,10 +151,10 @@ namespace ManagenrController
                                 Global.UpdatePhone(model.SN, msg.Connection);
 
                                 // 刷新好友数量
-                                if (Global.Form != null)
-                                {
-                                    Global.Form.Invoke(new Action(Global.Form.RefreshFriendNum));
-                                }
+                                //if (Global.Form != null)
+                                //{
+                                //    Global.Form.Invoke(new Action(Global.Form.RefreshFriendNum));
+                                //}
                                 Logger.Info("序列号：" + model.SN + ", 建立socket连接, 好友数为：" + model.result);
                                 break;
                             case 2:
@@ -193,15 +193,15 @@ namespace ManagenrController
                 {
                     if (Global.SendMsgQueue.TryDequeue(out msg))
                     {
-                        if (Global.GetPhone(msg.SerialNumber).MobileState == EnumMobileState.执行中)
-                        {
-                            if (msg != null)
-                            {
-                                Logger.Warn("手机正在执行其他功能，稍后处理");
-                                Global.SendMsgQueue.Enqueue(msg);
-                                continue;
-                            }
-                        }
+                        //if (Global.GetPhone(msg.SerialNumber).MobileState == EnumMobileState.执行中)
+                        //{
+                        //    if (msg != null)
+                        //    {
+                        //        Logger.Warn("手机正在执行其他功能，稍后处理");
+                        //        Global.SendMsgQueue.Enqueue(msg);
+                        //        continue;
+                        //    }
+                        //}
                         var conn = Global.GetPhone(msg.SerialNumber).Connection;
                         conn.BeginSend(msg.MessgaeBody, 0, msg.MessgaeBody.Length,
                             SocketFlags.None, (obj) => { Logger.Info("向手机：" + msg.SerialNumber + ", 发送消息成功"); }, null);

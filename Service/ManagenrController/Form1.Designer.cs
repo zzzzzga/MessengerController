@@ -34,9 +34,6 @@
             this.columnSN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnUsb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnSocket = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label_1 = new System.Windows.Forms.Label();
             this.maxFriendsNum = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -91,13 +88,10 @@
             this.columnNum,
             this.columnSN,
             this.columnUsb,
-            this.columnSocket,
-            this.columnState,
-            this.columnHeader1,
-            this.columnHeader2});
+            this.columnSocket});
             this.listView1.Location = new System.Drawing.Point(2, 1);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(338, 641);
+            this.listView1.Size = new System.Drawing.Size(322, 641);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -111,32 +105,17 @@
             // 
             this.columnSN.Text = "设备号";
             this.columnSN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnSN.Width = 50;
+            this.columnSN.Width = 80;
             // 
             // columnUsb
             // 
             this.columnUsb.Text = "USB连接";
-            this.columnUsb.Width = 50;
+            this.columnUsb.Width = 80;
             // 
             // columnSocket
             // 
             this.columnSocket.Text = "Socket连接";
-            this.columnSocket.Width = 50;
-            // 
-            // columnState
-            // 
-            this.columnState.Text = "手机状态";
-            this.columnState.Width = 50;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "好友数";
-            this.columnHeader1.Width = 50;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "执行结果";
-            this.columnHeader2.Width = 50;
+            this.columnSocket.Width = 80;
             // 
             // label_1
             // 
@@ -146,6 +125,7 @@
             this.label_1.Size = new System.Drawing.Size(113, 12);
             this.label_1.TabIndex = 1;
             this.label_1.Text = "拥有最多的好友数：";
+            this.label_1.Visible = false;
             // 
             // maxFriendsNum
             // 
@@ -155,6 +135,7 @@
             this.maxFriendsNum.Size = new System.Drawing.Size(11, 12);
             this.maxFriendsNum.TabIndex = 2;
             this.maxFriendsNum.Text = "0";
+            this.maxFriendsNum.Visible = false;
             // 
             // label1
             // 
@@ -164,6 +145,7 @@
             this.label1.Size = new System.Drawing.Size(113, 12);
             this.label1.TabIndex = 3;
             this.label1.Text = "拥有最少的好友数：";
+            this.label1.Visible = false;
             // 
             // minFriendsNum
             // 
@@ -173,6 +155,7 @@
             this.minFriendsNum.Size = new System.Drawing.Size(11, 12);
             this.minFriendsNum.TabIndex = 4;
             this.minFriendsNum.Text = "0";
+            this.minFriendsNum.Visible = false;
             // 
             // label2
             // 
@@ -443,13 +426,13 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.toolStripMenuItem1.Text = "选择图片";
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
             this.toolStripMenuItem2.Text = "删除图片";
             // 
             // MainForm
@@ -532,11 +515,11 @@
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.ColumnHeader columnUsb;
         private System.Windows.Forms.ColumnHeader columnSocket;
-        private System.Windows.Forms.ColumnHeader columnState;
+        //private System.Windows.Forms.ColumnHeader columnState;
         private System.Windows.Forms.Button installApkBtn;
         private System.Windows.Forms.Button openApkBtn;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
+        //private System.Windows.Forms.ColumnHeader columnHeader1;
+        //private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
