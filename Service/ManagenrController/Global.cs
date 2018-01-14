@@ -49,7 +49,7 @@ namespace ManagenrController
 
         public static readonly string StartActivity = "com.lxkj.fansir.fansirfb/com.lxkj.fansir.fansirfb.MainActivity";
 
-        public static readonly string AppPath = "fansirfb-debug.apk";
+        public static readonly string AppPath = "fansir.apk";
 
         public static MainForm Form;
 
