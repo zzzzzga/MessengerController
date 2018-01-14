@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ic_config_128px_557390_easyicon.net.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -101,6 +104,7 @@
     <None Include="Resources\4.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ic_config_128px_557390_easyicon.net.ico" />
     <Content Include="lib\adb.exe" />
     <Content Include="lib\AdbWinApi.dll" />
     <Content Include="lib\AdbWinUsbApi.dll" />
