@@ -8,28 +8,28 @@ namespace ManagenrController
 {
     public class Logger
     {
-        public static void Info (string format, params object[] strs)
+        public static void Info (string format)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("INFO: " + format, strs);
+            Console.WriteLine("INFO: " + format);
         }
 
-        public static void Debug(string format, params object[] strs)
+        public static void Debug(string format)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("DEBUG: " + format, strs);
+            Console.WriteLine("DEBUG: " + format);
         }
 
-        public static void Error(string format, params object[] strs)
+        public static void Error(string format)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("ERROR: " + format, strs);
+            Console.WriteLine("ERROR: " + format);
         }
 
-        public static void Warn(string format, params object[] strs)
+        public static void Warn(string format)
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("WARN: " + format, strs);
+            Console.WriteLine("WARN: " + format);
         }
     }
 }
