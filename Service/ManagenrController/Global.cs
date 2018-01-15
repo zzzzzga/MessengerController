@@ -39,7 +39,7 @@ namespace ManagenrController
         /// <summary>
         /// 服务器端口
         /// </summary>
-        public static readonly int Port = 14807;
+        public static readonly int Port = 14808;
         /// <summary>
         /// 手机上映射的端口
         /// </summary>

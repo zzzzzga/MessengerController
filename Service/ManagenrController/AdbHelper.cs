@@ -67,7 +67,7 @@ namespace ManagenrController
                     MobileState = EnumMobileState.准备
                 };
                 Global.AddPhoneDic(item, phone);
-                MobileMapPortPC(phone, Global.MobilePort, Global.Port);
+                // MobileMapPortPC(phone, Global.MobilePort, Global.Port);
                 Logger.Info("手机：" + item + ", Usb连接");
             }
         }

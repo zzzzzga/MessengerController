@@ -56,7 +56,7 @@ namespace ManagenrController
                 // 启动socket服务
                 // 获得连接
                 socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-                socket.Bind(new IPEndPoint(IPAddress.Parse(Global.IP), Global.Port));
+                socket.Bind(new IPEndPoint(IPAddress.Any, Global.Port));
                 socket.Listen(100);
                 Socket connection = null;
 
