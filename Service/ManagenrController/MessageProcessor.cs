@@ -209,11 +209,11 @@ namespace ManagenrController
                 }
                 catch(Exception ex)
                 {
-                    if (msg != null)
-                    {
-                        Logger.Warn("消息发送失败， 正在重新发送");
-                        Global.SendMsgQueue.Enqueue(msg);
-                    }
+                    //if (msg != null)
+                    //{
+                    //    Logger.Warn("消息发送失败， 正在重新发送");
+                    //    Global.SendMsgQueue.Enqueue(msg);
+                    //}
                     Logger.Error(ex.ToString());
                 }
             }

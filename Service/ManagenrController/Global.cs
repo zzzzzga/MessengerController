@@ -45,7 +45,7 @@ namespace ManagenrController
         /// </summary>
         public static readonly int MobilePort = 14808;
 
-        public static readonly int ScanTime = 1; // 每1秒扫描一次
+        public static readonly int ScanTime = 5; // 每1秒扫描一次
 
         public static readonly string StartActivity = "com.lxkj.fansir.fansirfb/com.lxkj.fansir.fansirfb.MainActivity";
 

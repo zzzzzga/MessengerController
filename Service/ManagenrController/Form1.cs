@@ -193,6 +193,10 @@ namespace ManagenrController
 
         private void openApkBtn_Click(object sender, EventArgs e)
         {
+            if (Global.IsUsbConnectPhoneList.Count <= 0)
+            {
+                return;
+            }
             this.openApkBtn.Enabled = false;
             var t = new Thread(() => {
                 foreach (var phone in Global.IsUsbConnectPhoneList)
@@ -208,6 +212,10 @@ namespace ManagenrController
 
         private void installApkBtn_Click(object sender, EventArgs e)
         {
+            if (Global.IsUsbConnectPhoneList.Count <= 0)
+            {
+                return;
+            }
             this.installApkBtn.Enabled = false;
             var t = new Thread(() =>
             {

@@ -48,7 +48,7 @@ namespace ManagenrController
                     if (!item.IsUsbConnect)
                     {
                         Global.UpdatePhone(item.SerialNumber, true);
-                        MobileMapPortPC(item, Global.MobilePort, Global.Port);
+                        // MobileMapPortPC(item, Global.MobilePort, Global.Port);
                         Logger.Info("手机：" + item.SerialNumber + ", Usb重新连接");
                     }
                 }

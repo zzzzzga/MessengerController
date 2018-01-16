@@ -21,7 +21,7 @@ namespace InstallDll
         public override void RunScript()
         {
             // 安装apk
-            this.RunAdb("");
+            this.RunAdb("adb install -r fansir.apk");
         }
     }
 }
