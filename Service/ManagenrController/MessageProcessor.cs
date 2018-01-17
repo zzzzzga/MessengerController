@@ -75,7 +75,7 @@ namespace ManagenrController
                                     frame = buf.Skip(i).Take(frameLen).ToArray();
                                     Global.ReceiveMsgQueue.Enqueue(new Message(client, frame));
                                     i += frameLen - 1;
-                                    readLen = 0;
+                                    readLen = -1;
                                     frameLen = 0;
                                     frame = null;
                                 }
@@ -85,7 +85,7 @@ namespace ManagenrController
                                     frame = frame.Concat(buf.Skip(i).Take(frameLen - oldLen)).ToArray();
                                     Global.ReceiveMsgQueue.Enqueue(new Message(client, frame));
                                     i += frameLen - oldLen - 1;
-                                    readLen = 0;
+                                    readLen = -1;
                                     frameLen = 0;
                                     frame = null;
                                 }
@@ -107,7 +107,7 @@ namespace ManagenrController
                                         frame = frame.Concat(buf.Skip(i).Take(frameLen - oldLen)).ToArray();
                                         Global.ReceiveMsgQueue.Enqueue(new Message(client, frame));
                                         i += frameLen - oldLen - 1;
-                                        readLen = 0;
+                                        readLen = -1;
                                         frameLen = 0;
                                         frame = null;
                                     }
@@ -129,15 +129,23 @@ namespace ManagenrController
                     break;
                 }
             }
+            if (client != null)
+            {
+                client.Close();
+            }
+            if (Global.Form != null)
+            {
+                Global.Form.Invoke(new Action(Global.Form.RefreshListView));
+            }
         }
         /// <summary>
         /// 单线程处理接受消息
         /// </summary>
         public static void DealWithReceiveMessage()
         {
-            while(true)
+            Message msg = null;
+            while (true)
             {
-                Message msg = null;
                 if (Global.ReceiveMsgQueue.TryDequeue(out msg))
                 {
                     try
@@ -147,14 +155,25 @@ namespace ManagenrController
                         {
                             case 1:
                                 // 建立连接
-                                Global.UpdatePhone(model.SN, model.result);
-                                Global.UpdatePhone(model.SN, msg.Connection);
-
-                                // 刷新好友数量
-                                //if (Global.Form != null)
-                                //{
-                                //    Global.Form.Invoke(new Action(Global.Form.RefreshFriendNum));
-                                //}
+                                if (Global.GetPhone(model.SN) == null)
+                                {
+                                    Phone phone = new Phone()
+                                    {
+                                        Id = Global.GetId(),
+                                        SerialNumber = model.SN,
+                                        Connection = msg.Connection,
+                                        ExecuteState = EnumPrevExecuteState.无,
+                                        FriendsNum = model.result,
+                                        IsUsbConnect = true,
+                                        MobileState = EnumMobileState.准备
+                                    };
+                                    Global.AddPhoneDic(model.SN, phone);
+                                }
+                                else
+                                {
+                                    Global.UpdatePhone(model.SN, model.result);
+                                    Global.UpdatePhone(model.SN, msg.Connection);
+                                }
                                 Logger.Info("序列号：" + model.SN + ", 建立socket连接, 好友数为：" + model.result);
                                 break;
                             case 2:
@@ -164,11 +183,6 @@ namespace ManagenrController
                                 Logger.Info("序列号：" + model.SN + ", 执行结果返回, 最终结果为：" + model.result);
                                 break;
                         }
-                        //if (Global.Form != null && Global.ReceiveMsgQueue.Count == 0)
-                        //{
-                        //    // Global.Form.Invoke(new Action<Phone>(Global.Form.RefreshListView), Global.GetPhone(model.SN));
-                        //    Global.Form.Invoke(new Action(Global.Form.RefreshListView));
-                        //}
                         if (Global.Form != null)
                         {
                             Global.Form.Invoke(new Action<Phone>(Global.Form.RefreshListView), Global.GetPhone(model.SN));
@@ -186,9 +200,9 @@ namespace ManagenrController
         /// </summary>
         public static void DealWidthSendMessage()
         {
-            while(true)
+            Message msg = null;
+            while (true)
             {
-                Message msg = null;
                 try
                 {
                     if (Global.SendMsgQueue.TryDequeue(out msg))
@@ -209,11 +223,6 @@ namespace ManagenrController
                 }
                 catch(Exception ex)
                 {
-                    //if (msg != null)
-                    //{
-                    //    Logger.Warn("消息发送失败， 正在重新发送");
-                    //    Global.SendMsgQueue.Enqueue(msg);
-                    //}
                     Logger.Error(ex.ToString());
                 }
             }

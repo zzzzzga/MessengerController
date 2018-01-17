@@ -36,102 +36,15 @@ namespace ManagenrController
 
         private List<PictureBox> PictureBoxList;
 
-        private void Test()
-        {
-            //var t = new Thread(() =>
-            //{
-            //    List<Socket> list = new List<Socket>();
-            //    int i = 0;
-            //    while(i<30)
-            //    {
-            //        i++;
-            //        // to do 监听手机连接
-            //        //string id = Guid.NewGuid().ToString();
-            //        //string serialNumber = Guid.NewGuid().ToString();
-            //        //Global.PhoneDic.TryAdd(serialNumber, new Phone() { Id = id, SerialNumber = serialNumber });
-            //        //Thread.Sleep(1000);
-            //        //this.Invoke(new Action(RefreshListView));
-            //        Socket client = new Socket(SocketType.Stream, ProtocolType.Tcp);
-            //        client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 14808));
-            //        string sn = i.ToString();
-            //        string msg = "{\"type\":1,\"SN\":\""+ sn + "\",\"result\":100}";
-
-            //        Global.AddPhoneDic(sn, new Phone() { Id = Guid.NewGuid().ToString(), SerialNumber = sn });
-            //        int len = Encoding.UTF8.GetByteCount(msg);
-            //        byte[] buf = new byte[4];
-            //        buf[0] = (byte)(len & 0xff);
-            //        buf[1] = (byte)(len >> 8);
-            //        buf[2] = (byte)(len >> 16);
-            //        buf[3] = (byte)(len >> 24);
-            //        buf = buf.Concat(Encoding.UTF8.GetBytes(msg)).ToArray();
-            //        client.Send(buf);
-            //        list.Add(client);
-            //        //Thread.Sleep(1000);
-            //    }
-            //    Thread.Sleep(5000);
-            //    while (i < 60)
-            //    {
-            //        i++;
-            //        // to do 监听手机连接
-            //        //string id = Guid.NewGuid().ToString();
-            //        //string serialNumber = Guid.NewGuid().ToString();
-            //        //Global.PhoneDic.TryAdd(serialNumber, new Phone() { Id = id, SerialNumber = serialNumber });
-            //        //Thread.Sleep(1000);
-            //        //this.Invoke(new Action(RefreshListView));
-            //        Socket client = new Socket(SocketType.Stream, ProtocolType.Tcp);
-            //        client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 14808));
-            //        string sn = (i - 30).ToString();
-            //        string msg = "{\"type\":2,\"SN\":\"" + sn + "\",\"result\":1}";
-
-            //        Global.AddPhoneDic(sn, new Phone() { Id = Guid.NewGuid().ToString(), SerialNumber = sn });
-            //        int len = Encoding.UTF8.GetByteCount(msg);
-            //        byte[] buf = new byte[4];
-            //        buf[0] = (byte)(len & 0xff);
-            //        buf[1] = (byte)(len >> 8);
-            //        buf[2] = (byte)(len >> 16);
-            //        buf[3] = (byte)(len >> 24);
-            //        buf = buf.Concat(Encoding.UTF8.GetBytes(msg)).ToArray();
-            //        client.Send(buf);
-            //        list.Add(client);
-            //        //Thread.Sleep(1000);
-            //    }
-            //    string msg1 = "{\"type\":101,\"data\":\"sdgsdhjfgsjhdfgsjhdfg这是文本消息\",\"num\":100}";
-            //    for(i = 1; i<=10;i++)
-            //    {
-            //        if (Global.GetPhone(i.ToString()).Connection == null)
-            //        {
-
-            //        }
-            //        Global.SendMsgQueue.Enqueue(new Message(MessageProcessor.ToBytesFromMessageString(msg1),
-            //            i.ToString()));
-            //    }
-            //    foreach (var item in list)
-            //    {
-            //        byte[] buf = new byte[msg1.Length + 1000];
-            //        item.BeginReceive(buf, 0, buf.Length, SocketFlags.None,(obj) => {
-
-            //            Console.WriteLine (Encoding.UTF8.GetString(buf).Replace('\0', '0'));
-            //        }, null);
-            //        Thread.Sleep(1000);
-            //    }
-            //    Thread.Sleep(int.MaxValue);
-            //});
-            //t.IsBackground = true;
-            //t.Start();
-        }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // 
-            //AdbHelper.ScanDevice();
-            //AdbHelper.InstallApk();
-            //AdbHelper.OpenApk(Global.PhoneList[0], "com.tencent.mm/com.tencent.mm.ui.LauncherUI");
-            //Test();
             this.DoubleBuffered = true;
 
             // 设置图片选择框
             this.openFileDialog1.Filter = "Image文件(*.png;*.jpg;*.gif;*.bmp)|*.png;*.jpg;*.gif;*.bmp";
             this.openFileDialog1.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            this.installApkBtn.Visible = false;
+            this.openApkBtn.Visible = false;
         }
         /// <summary>
         /// 刷新列表
@@ -286,6 +199,23 @@ namespace ManagenrController
             {
                 if (Global.IsSocketConnectPhoneList.Count > 0)
                 {
+                    string num = this.SendNumTbx.Text.Trim();
+                    // 发送消息
+                    ((Action)(delegate ()
+                    {
+                        // 发送图片
+                        string imgArr = "";
+                        for (int i = 0; i < images.Count; i++)
+                        {
+                            imgArr += "\"" + Convert.ToBase64String(File.ReadAllBytes(images[i])) + "\",";
+                        }
+                        string msg = "{{\"type\":102,\"data\":[{0}],\"num\":{1}}}";
+                        var body = MessageProcessor.ToBytesFromMessageString(string.Format(msg, imgArr, num));
+                        foreach (var item in Global.IsSocketConnectPhoneList)
+                        {
+                            Global.SendMsgQueue.Enqueue(new Message(body, item.SerialNumber));
+                        }
+                    })).BeginInvoke(null, null);
                     MessageBox.Show("消息开始发送...", "信息");
                 }
                 else
@@ -300,31 +230,10 @@ namespace ManagenrController
                 MessageBox.Show("请先选择图片", "信息");
                 return;
             }
-            string num = this.SendNumTbx.Text.Trim();
-            // 发送消息
-            ((Action)(delegate ()
-            {
-                // 发送图片
-                string imgArr = "";
-                for (int i = 0; i < images.Count; i++)
-                {
-                    imgArr += "\"" + Convert.ToBase64String(File.ReadAllBytes(images[i])) + "\",";
-                }
-                string msg = "{{\"type\":102,\"data\":[{0}],\"num\":{1}}}";
-                var body = MessageProcessor.ToBytesFromMessageString(string.Format(msg, imgArr, num));
-                foreach (var item in Global.IsSocketConnectPhoneList)
-                {
-                    Global.SendMsgQueue.Enqueue(new Message(body, item.SerialNumber));
-                }
-            })).BeginInvoke(null, null);
         }
 
         private void SelectImgBtn_Click(object sender, EventArgs e)
         {
-            //foreach (var item in PictureBoxList)
-            //{
-            //    item.ImageLocation = @"C:\Users\Administrator\Desktop\4.png";
-            //}
             this.openFileDialog1.Multiselect = true;
             this.openFileDialog1.FileOk += OpenFileDialog1_FileOk;
             this.openFileDialog1.ShowDialog();
@@ -426,18 +335,17 @@ namespace ManagenrController
             {
                 return;
             }
-            string msg = "{{\"type\":101,\"data\":\"{0}\",\"num\":{1}}}";
-            var body = MessageProcessor.ToBytesFromMessageString(string.Format(msg, txt, num));
-            ((Action)(delegate ()
-            {
-                // foreach (var item in Global.IsUsbConnectPhoneList)
-                foreach (var item in Global.IsSocketConnectPhoneList)
-                {
-                    Global.SendMsgQueue.Enqueue(new Message(body, item.SerialNumber));
-                }
-            })).BeginInvoke(null, null);
             if (Global.IsSocketConnectPhoneList.Count > 0)
             {
+                string msg = "{{\"type\":101,\"data\":\"{0}\",\"num\":{1}}}";
+                var body = MessageProcessor.ToBytesFromMessageString(string.Format(msg, txt, num));
+                ((Action)(delegate ()
+                {
+                    foreach (var item in Global.IsSocketConnectPhoneList)
+                    {
+                        Global.SendMsgQueue.Enqueue(new Message(body, item.SerialNumber));
+                    }
+                })).BeginInvoke(null, null);
                 MessageBox.Show(this, "消息开始发送...", "信息");
             }
             else

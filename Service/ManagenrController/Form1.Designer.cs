@@ -33,7 +33,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnSN = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnUsb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            // this.columnUsb = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnSocket = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label_1 = new System.Windows.Forms.Label();
             this.maxFriendsNum = new System.Windows.Forms.Label();
@@ -88,7 +88,7 @@
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnNum,
             this.columnSN,
-            this.columnUsb,
+            //this.columnUsb,
             this.columnSocket});
             this.listView1.Location = new System.Drawing.Point(2, 1);
             this.listView1.Name = "listView1";
@@ -110,8 +110,8 @@
             // 
             // columnUsb
             // 
-            this.columnUsb.Text = "USB连接";
-            this.columnUsb.Width = 80;
+            //this.columnUsb.Text = "USB连接";
+            //this.columnUsb.Width = 80;
             // 
             // columnSocket
             // 
@@ -515,7 +515,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.ColumnHeader columnUsb;
+        //private System.Windows.Forms.ColumnHeader columnUsb;
         private System.Windows.Forms.ColumnHeader columnSocket;
         //private System.Windows.Forms.ColumnHeader columnState;
         private System.Windows.Forms.Button installApkBtn;

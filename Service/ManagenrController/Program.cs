@@ -17,7 +17,8 @@ namespace ManagenrController
             Service.Default.StartService();
             Service.Default.Receive();
             Service.Default.Send();
-            Service.Default.ScanDevice();
+            // 扫描手机连接
+            // Service.Default.ScanDevice();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

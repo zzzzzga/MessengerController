@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagenrController", "ManagenrController\ManagenrController.csproj", "{6636F4C7-716E-422C-BDA2-F1AE30500169}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerDll", "ControllerDll\ControllerDll.csproj", "{0EFAF49E-6C31-4F86-95E6-2BDBF93F901C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallDll", "InstallDll\InstallDll.csproj", "{F311B548-6310-4249-975C-8F6F82DFB898}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{0EFAF49E-6C31-4F86-95E6-2BDBF93F901C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EFAF49E-6C31-4F86-95E6-2BDBF93F901C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EFAF49E-6C31-4F86-95E6-2BDBF93F901C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F311B548-6310-4249-975C-8F6F82DFB898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F311B548-6310-4249-975C-8F6F82DFB898}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F311B548-6310-4249-975C-8F6F82DFB898}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F311B548-6310-4249-975C-8F6F82DFB898}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
